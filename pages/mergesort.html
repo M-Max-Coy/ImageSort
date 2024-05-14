@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Manual Sort</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" contents="width=device-width, initial-scale=0.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../styles/mergesort.css">
+    </head>
+
+    <body>
+        <h1 id="title">Sort Items</h1>
+        <p class="text" id="msdesc">Sort a list of images. Upload image files below to begin sorting.</p>
+
+        <input type="file" id="fileInput" multiple>
+        <button onclick="uploadFiles('fileInput')" id="sortButton">Begin Sorting</button>
+        <script src="../scripts/mergesort.js"></script>
+
+        <br>
+
+        <p class="text" id="instructions">
+            Click on the image that should rank higher in your list.
+        </p>
+
+        <div class="container" id="image-container">
+            <button class="button" onclick="" id="left-image-button">
+                <img alt="button" id="left-image">
+            </button>
+            <button class="button" onclick="" id="right-image-button">
+                <img alt="button" id="right-image">
+            </button>
+        </div>
+
+        <div class="container" id="image-list">
+
+        </div>
+    </body>
+    
+</html>
