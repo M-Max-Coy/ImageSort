@@ -1,3 +1,47 @@
+
+/*
+This class is a recursive class which holds pairs of items
+
+Fields:
+    a: either an integer or another pair
+    b: either null or another pair
+    c: the "top" value of the pair (a is top, b is bottom)
+*/
+class Pair {
+    constructor(a,b) {
+        this.a = a;
+        this.b = b;
+        if (this.b == null) {
+            this.c = this.a;
+        } else {
+            this.c = this.a.c;
+        }
+    }
+
+    pop() {
+        var res = this.b;
+        this.b = this.a.b;
+        this.a = this.a.a;
+        return res;
+    }
+
+    async sort() {
+        if (await compare(this.a.c,this.b.c) == "left-image") {
+            var temp = this.a;
+            this.a = this.b;
+            this.b = temp;
+            this.c = this.a.c;
+        }
+    }
+
+    compare(other) {
+        return this.c < other.c
+    }
+}
+
+/*
+Entry function to begin sorting
+*/
 async function uploadFiles(id) {
     const fileInput = document.getElementById(id);
 
@@ -12,10 +56,13 @@ async function uploadFiles(id) {
     document.getElementById('sortButton').style.display = 'none';
 
     init(images);
-    await mergeSort(images, 0, images.length-1);
+    await merge_insertion_sort(images);
     showImages(images);
 }
 
+/*
+Prepare page for sorting
+*/
 function init(images) {
     var title = document.getElementById("title");
     title.style.display = 'none';
@@ -41,56 +88,141 @@ function init(images) {
     right.src = URL.createObjectURL(images[1]);
 }
 
-async function mergeSort(images, p, r) {
-    if (p < r) {
-        var q = p + parseInt((r-p)/2);
-        await mergeSort(images, p, q);
-        await mergeSort(images, q+1, r);
-        await merge(images, p, q, r);
+async function merge_insertion_sort(A) {
+    var B = [];
+    for (let i = 0; i < A.length; i++) {
+        B.push(new Pair(A[i],null));
+    }
+    await merge_insertion_sort_helper(B);
+    for (let i = 0; i < A.length; i++) {
+        A[i] = B[i].c;
     }
 }
 
-async function merge(images, p, q, r) {
-    var n1 = q-p+1;
-    var n2 = r-q;
+async function merge_insertion_sort_helper(A) {
+    var n = A.length;
 
-    var L = new Array(n1);
-    var R = new Array(n2);
+    if (n <= 1) {
+        return;
+    }
 
-    for (var i = 0; i < n1; i++)
-        L[i] = images[p + i];
-    for (var i = 0; i < n2; i++)
-        R[i] = images[q + 1 + i];
+    var straggler = null;
+
+    if (n % 2 == 1) {
+        straggler = A[n-1];
+    }
+
+    B = [];
+    for (let i = 0; i < Math.floor(n/2); i++) {
+        B.push(new Pair(A[i],A[i+Math.floor(n/2)]));
+    }
+
+    for (let i = 0; i < B.length; i++) {
+        await B[i].sort();
+    }
+
+    await merge_insertion_sort_helper(B);
+
+    var pairs = [];
+    for (let i = 0; i < B.length; i++) {
+        pairs.push(B[i].pop());
+    }
+
+    var a = 1
+    while (jacobsthal(a+1) <= pairs.length) {
+        k = 2*jacobsthal(a)+(jacobsthal(a+1)-jacobsthal(a)-1)
+        for (let j = jacobsthal(a+1); j > jacobsthal(a); j--) {
+            await binary_insert(B,pairs[j-1],0,k);
+        }
+        a += 1;
+    }
+
+    for (let i = pairs.length; i > jacobsthal(a); i--) {
+        await binary_insert(B,pairs[i-1],0,B.length-1);
+    }
+
+    if (straggler != null) {
+        await binary_insert(B,straggler,0,B.length);
+    }
+
+    for (let i = 0; i < n; i++) {
+        A[i] = B[i];
+    }
+}
+
+// Might need improvements
+function jacobsthal(n) {
+    if (n == 1) {
+        return 0;
+    }
+    return Math.floor((2**n-(-1)**n)/3);
+}
+
+async function binary_insert(A,item,a,b) {
+    if (b-a == 0) {
+        A.splice(a,0,item);
+        return;
+    }
+
+    var m = a + Math.floor((b-a)/2);
+
+    if (await compare(A[m].c,item.c) != "left-image") {
+        await binary_insert(A,item,a,m);
+    } else {
+        await binary_insert(A,item,m+1,b);
+    }
+}
+
+// async function mergeSort(images, p, r) {
+//     if (p < r) {
+//         var q = p + parseInt((r-p)/2);
+//         await mergeSort(images, p, q);
+//         await mergeSort(images, q+1, r);
+//         await merge(images, p, q, r);
+//     }
+// }
+
+// async function merge(images, p, q, r) {
+//     var n1 = q-p+1;
+//     var n2 = r-q;
+
+//     var L = new Array(n1);
+//     var R = new Array(n2);
+
+//     for (var i = 0; i < n1; i++)
+//         L[i] = images[p + i];
+//     for (var i = 0; i < n2; i++)
+//         R[i] = images[q + 1 + i];
     
-    var i = 0;
-    var j = 0;
-    var k = p;
+//     var i = 0;
+//     var j = 0;
+//     var k = p;
 
-    while (i < n1 && j < n2) {
-        var comp = await compare(L[i], R[j]);
-        if (comp == "left-image") {
-            images[k] = L[i];
-            i++;
-        }
-        else {
-            images[k] = R[j];
-            j++;
-        }
-        k++;
-    }
+//     while (i < n1 && j < n2) {
+//         var comp = await compare(L[i], R[j]);
+//         if (comp == "left-image") {
+//             images[k] = L[i];
+//             i++;
+//         }
+//         else {
+//             images[k] = R[j];
+//             j++;
+//         }
+//         k++;
+//     }
 
-    while (i < n1) {
-        images[k] = L[i];
-        i++;
-        k++;
-    }
+//     while (i < n1) {
+//         images[k] = L[i];
+//         i++;
+//         k++;
+//     }
 
-    while (j < n2) {
-        images[k] = R[j];
-        j++;
-        k++;
-    }
-}
+//     while (j < n2) {
+//         images[k] = R[j];
+//         j++;
+//         k++;
+//     }
+// }
 
 async function compare(image1, image2) {
     var left = document.getElementById("left-image");
@@ -113,11 +245,11 @@ async function compare(image1, image2) {
     });
 }
 
-function swap(images, a, b) {
-    var temp = images[a];
-    images[a] = images[b];
-    images[b] = temp;
-}
+// function swap(images, a, b) {
+//     var temp = images[a];
+//     images[a] = images[b];
+//     images[b] = temp;
+// }
 
 function showImages(images) {
     var container = document.querySelector('.container');
