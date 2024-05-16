@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Manual Sort</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" contents="width=device-width, initial-scale=0.0, user-scalable=no">
+
+        <link rel="stylesheet" href="../styles/imagesort.css">
+    </head>
+
+    <body>
+        <div>
+            <h1 id="title">Sort Items</h1>
+            <p class="text" id="msdesc">Sort a list of images. Upload image files below to begin sorting.</p>
+
+            <div class="horizontal-center">
+                    <input type="file" id="file-input" multiple>
+            </div>
+
+            <div class="horizontal-center">
+                    <button onclick="uploadFiles('file-input')" id="sort-button">Begin Sorting</button>
+                    <script src="../scripts/imagesort.js"></script>
+            </div>
+
+        </div>
+
+        <p class="text" id="instructions">
+            Click on the image that should rank higher in your list.
+        </p>
+
+        <div class="container" id="image-container">
+            <button class="choice-button" onclick="" id="left-image-button">
+                <img alt="button" id="left-image">
+            </button>
+            <button class="choice-button" onclick="" id="right-image-button">
+                <img alt="button" id="right-image">
+            </button>
+        </div>
+
+        <div class="container" id="image-list">
+
+        </div>
+    </body>
+    
+</html>

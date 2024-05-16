@@ -33,10 +33,6 @@ class Pair {
             this.c = this.a.c;
         }
     }
-
-    compare(other) {
-        return this.c < other.c
-    }
 }
 
 /*
@@ -52,8 +48,8 @@ async function uploadFiles(id) {
 
     var images = Array.from(fileInput.files);
 
-    document.getElementById('fileInput').style.display = 'none';
-    document.getElementById('sortButton').style.display = 'none';
+    document.getElementById('file-input').style.display = 'none';
+    document.getElementById('sort-button').style.display = 'none';
 
     init(images);
     await merge_insertion_sort(images);
@@ -74,7 +70,7 @@ function init(images) {
     var container = document.querySelector('.container');
     container.style.display = "flex";
 
-    var image = document.querySelector('.button');
+    var image = document.querySelector('.choice-button');
     image.style.display = "block";
 
     var leftButton = document.getElementById("left-image-button");
@@ -173,57 +169,6 @@ async function binary_insert(A,item,a,b) {
     }
 }
 
-// async function mergeSort(images, p, r) {
-//     if (p < r) {
-//         var q = p + parseInt((r-p)/2);
-//         await mergeSort(images, p, q);
-//         await mergeSort(images, q+1, r);
-//         await merge(images, p, q, r);
-//     }
-// }
-
-// async function merge(images, p, q, r) {
-//     var n1 = q-p+1;
-//     var n2 = r-q;
-
-//     var L = new Array(n1);
-//     var R = new Array(n2);
-
-//     for (var i = 0; i < n1; i++)
-//         L[i] = images[p + i];
-//     for (var i = 0; i < n2; i++)
-//         R[i] = images[q + 1 + i];
-    
-//     var i = 0;
-//     var j = 0;
-//     var k = p;
-
-//     while (i < n1 && j < n2) {
-//         var comp = await compare(L[i], R[j]);
-//         if (comp == "left-image") {
-//             images[k] = L[i];
-//             i++;
-//         }
-//         else {
-//             images[k] = R[j];
-//             j++;
-//         }
-//         k++;
-//     }
-
-//     while (i < n1) {
-//         images[k] = L[i];
-//         i++;
-//         k++;
-//     }
-
-//     while (j < n2) {
-//         images[k] = R[j];
-//         j++;
-//         k++;
-//     }
-// }
-
 async function compare(image1, image2) {
     var left = document.getElementById("left-image");
     var right = document.getElementById("right-image");
@@ -244,12 +189,6 @@ async function compare(image1, image2) {
         rightButton.addEventListener('click', resolveHandler)
     });
 }
-
-// function swap(images, a, b) {
-//     var temp = images[a];
-//     images[a] = images[b];
-//     images[b] = temp;
-// }
 
 function showImages(images) {
     var container = document.querySelector('.container');

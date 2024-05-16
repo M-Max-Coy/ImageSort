@@ -10,15 +10,73 @@
     </head>
 
     <body>
-        <h1>Manual Item Sorter</h1>
-        <p id="description">This website allows you to sort items manually, only needing to compare two images at a time.
-        This is more organized than attempting to drag items around an entire list. The sorting algorithm implemented is merge sort.
-        This algorithm is good for reducing the total comparisons required.
-        </p>
+        <div>
+            <h1>Sort Images</h1>
+            <p id="description"> Sort images by manually comparing items. Two images will be shown at each step and you choose whichever image should appear higher on your list.
+            </p>
+        </div>
 
-        <a href="pages/mergesort.html">
-            <button id="begin">Begin Sorting</button>
-        </a>
+        <div class="container">
+            <div class="horizontal-center">
+                <a href="pages/imagesort.html">
+                    <button id="begin">Begin Sorting</button>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <h2>How it works</h2>
+            <p>Under the hood we have implemented the Ford-Johnson Algorithm
+                (also known as merge-insertion sort). This algorithm was built
+                to allow sorting to be done with a minimal amount of comparisons.
+            </p>
+    
+            <table>
+                <thead>
+                    <tr>
+                        <th>Input Size</th>
+                        <th>Avg Comparisons</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr>
+                        <td>10</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>54</td>
+                    </tr>
+                    <tr>
+                        <td>30</td>
+                        <td>96</td>
+                    </tr>
+                    <tr>
+                        <td>40</td>
+                        <td>145</td>
+                    </tr>
+                    <tr>
+                        <td>50</td>
+                        <td>193</td>
+                    </tr>
+                    <tr>
+                        <td>100</td>
+                        <td>481</td>
+                    </tr>
+                    <tr>
+                        <td>500</td>
+                        <td>3560</td>
+                    </tr>
+                    <tr>
+                        <td>1000</td>
+                        <td>8113</td>
+                    </tr>
+    
+                </tbody>
+                <caption>Average number of comparisons needed to sort n images</caption>
+            </table>
+        </div>
     </body>
 
 </html>

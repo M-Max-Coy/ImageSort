@@ -1,0 +1,93 @@
+body {
+    font-family: Arial;
+    background-color: rgb(252, 252, 227);
+}
+
+p {
+    font-family: Arial;
+    font-size: 20px;
+    text-align: left;
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    /* position: relative;
+    justify-content: space-between; */
+    display: none;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    font-family: Arial;
+    font-size: 20px; 
+    /* border-radius: 25cm; */
+}
+
+input {
+    width: 300px;
+    height: 50px;
+    font-family: Arial;
+    font-size: 20px; 
+}
+
+.text {
+    display: flex;
+    font-family: "Arial", sans-serif;
+    justify-content: center;
+    font-size: 20px;
+}
+
+#instructions {
+    display: none;
+    font-size: 40px;
+}
+
+#image-list {
+    border: 2px solid black;
+    overflow-x: auto;
+    white-space: nowrap;
+    background-color: rgb(255, 255, 255);
+}
+
+.horizontal-center {
+    text-align: center;
+}
+
+.choice-button {
+    width: 400px;
+    height: 400px;
+    display: none;
+    background-color: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0; 
+
+    /* For Circular Button */
+    /* border-radius: 50%; */
+    /* overflow: hidden; */
+}
+
+.choice-button img {
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    /* max-width: 200px;
+    max-height: 200px; */
+}
+
+#left-image-button {
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#right-image-button {
+    position: absolute;
+    left: 75%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

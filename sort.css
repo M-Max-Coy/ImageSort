@@ -1,7 +1,16 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial;
+    background-color: rgb(252, 252, 227);
+}
+
+p {
+    font-family: Arial;
+    font-size: 20px;
+    text-align: left;
+}
+
+h1 {
     text-align: center;
-    background-color: lightgray;
 }
 
 hr {
@@ -14,15 +23,37 @@ hr {
     letter-spacing: 2px;
 }
 
-#description {
-    font-family: "Arial", sans-serif;
-    font-size: 20px;
-    text-align: left;
-}
-
-#begin {
+button {
     width: 200px;
     height: 50px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial;
     font-size: 20px; 
+    border-radius: 25cm;
+}
+
+table {
+    border: 2px solid black;
+    background-color: white;
+}
+
+th {
+    border: 2px solid black;
+}
+
+td {
+    border: 2px solid black;
+}
+
+caption {
+    margin: 2px;
+    border: 2px solid;
+    background-color: white;
+}
+
+.container {
+    position: relative;
+}
+
+.horizontal-center {
+    text-align: center;
 }
