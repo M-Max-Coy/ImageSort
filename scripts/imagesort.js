@@ -197,16 +197,18 @@ function showImages(images) {
     leftButton.hidden = true;
     var rightButton = document.getElementById("right-image-button");
     rightButton.hidden = true;
+    var instructions = document.getElementById("instructions");
+    instructions.textContent = "Scroll to see all sorted images";
 
     var container2 = document.getElementById("image-list")
     container2.style.display = "block";
-    container2.style.overflow = "auto";
 
     var imagesArray = Array.from(images);
 
     imagesArray.forEach(function(image) {
         var img = document.createElement('img');
         img.classList.add("image");
+        img.classList.add("scrollable-container-image");
         img.src = URL.createObjectURL(image);
         container2.appendChild(img);
     });
