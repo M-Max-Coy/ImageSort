@@ -24,15 +24,6 @@ class Pair {
         this.a = this.a.a;
         return res;
     }
-
-    async sort() {
-        if (await compare(this.a.c,this.b.c) == "left-image") {
-            var temp = this.a;
-            this.a = this.b;
-            this.b = temp;
-            this.c = this.a.c;
-        }
-    }
 }
 
 /*
@@ -84,6 +75,15 @@ function init(images) {
     right.src = URL.createObjectURL(images[1]);
 }
 
+async function sort_pair(pair) {
+    if (await compare(pair.a.c,pair.b.c) == "left-image") {
+        var temp = pair.a;
+        pair.a = pair.b;
+        pair.b = temp;
+        pair.c = pair.a.c;
+    }
+}
+
 async function merge_insertion_sort(A) {
     var B = [];
     for (let i = 0; i < A.length; i++) {
@@ -114,7 +114,7 @@ async function merge_insertion_sort_helper(A) {
     }
 
     for (let i = 0; i < B.length; i++) {
-        await B[i].sort();
+        await sort_pair(B[i]);
     }
 
     await merge_insertion_sort_helper(B);
